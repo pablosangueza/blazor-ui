@@ -1,0 +1,48 @@
+﻿@page "/employee"
+@using BlazorUI.Services
+@inject EmployeeService EmployeeService
+
+<PageTitle>Employee</PageTitle>
+
+<h1>Employee</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (employees == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Birth</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in employees)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.FullName</td>
+                    <td>@employee.Birth</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private BlazorUI.Services.Employee[]? employees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employees = await EmployeeService.GetEmployeesAsync();
+    }
+
+   
+}
+
